@@ -15,6 +15,7 @@ table = response.json()
 
 time_series_daily = dict(table['Time Series (Daily)'])
 dates = list(time_series_daily.keys())
+dates.reverse()
 
 
 # Here, we separate out all the close values and then select the range we want from num_days
@@ -24,7 +25,7 @@ close_values = []
 values = []
 
 for key in time_series_daily:
-    close_values.append(float(time_series_daily[key]['4. close']))
+    close_values.insert(0, float(time_series_daily[key]['4. close']))
 for i in range(num_days):
     values.append(close_values[i])
 
@@ -40,14 +41,16 @@ x_data = dates[0:num_days]
 # Labeling and setting the ticks
 plt.figure(figsize=(10,8))
 plt.tight_layout()
-plt.title(f'{symbol} price from past {num_days} days ending {dates[0]}')
+plt.title(f'{symbol} price from past {num_days} days starting {dates[0]}')
 plt.xlabel('Dates')
 plt.ylabel(f'Price of {symbol} in USD')
 plt.yticks= range(round(close_values[0]), round(close_values[-1]), 5)
 plt.xticks(x_ticks, rotation=45)
 
 #plt.gca()(get current axis)
-plt.gca().invert_xaxis()
+#plt.gca().invert_xaxis()
 plt.grid()
+print(x_data)
+print(values)
 plt.plot(x_data, values)
 plt.show()
