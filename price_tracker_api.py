@@ -1,13 +1,10 @@
-import json
 import requests
 import matplotlib.pyplot as plt
-from datetime import date
-
 
 symbol = input('Which stock would you like to follow? (Enter stock symbol): ')
 num_days = int(input('How many days back? : '))
-API_KEY = 'WQT4AM73F83AQIO6'
 
+API_KEY = 'WQT4AM73F83AQIO6'
 url = f'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol={symbol}&apikey={API_KEY}'
 
 response = requests.get(url)
@@ -46,11 +43,9 @@ plt.xlabel('Dates')
 plt.ylabel(f'Price of {symbol} in USD')
 plt.yticks= range(round(close_values[0]), round(close_values[-1]), 5)
 plt.xticks(x_ticks, rotation=45)
+plt.grid()
 
 #plt.gca()(get current axis)
 #plt.gca().invert_xaxis()
-plt.grid()
-print(x_data)
-print(values)
 plt.plot(x_data, values)
 plt.show()
